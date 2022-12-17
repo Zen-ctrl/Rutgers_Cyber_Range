@@ -92,7 +92,7 @@ source ~/.bashrc
 
 Use aws configure to set up credentials on your computer. This will allow you to run the Terraform without a credential file or keys being in the Terraform files itself.
 
-
+### Terraform
 Install Terraform here: [https://developer.hashicorp.com/Terraform/tutorials/aws-get-started/install-cli](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 
 Run the Terraform from your command line. Preferably, use an IDE like Visual Studio with its built-in terminal.
