@@ -1,7 +1,6 @@
-Rutgers ITI InfoSec
-Scarlet Castle Cyber-Range
-Cloud and Baremetal
-
+# Rutgers ITI InfoSec | Scarlet Castle Cyber-Range
+### Cloud and Baremetal
+---
 
 
 # AWS Cloud Based Cyber Range
