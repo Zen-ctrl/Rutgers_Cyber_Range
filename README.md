@@ -92,18 +92,18 @@ source ~/.bashrc
 
 Use aws configure to set up credentials on your computer. This will allow you to run the Terraform without a credential file or keys being in the Terraform files itself.
 
-### Terraform
+## Terraform
 Install Terraform here: [https://developer.hashicorp.com/Terraform/tutorials/aws-get-started/install-cli](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 
 Run the Terraform from your command line. Preferably, use an IDE like Visual Studio with its built-in terminal.
 
-Terraform will run all Terraform files within the project folder. Make sure to navigate to the project folder in which Terraform is in. Then run the ‘Terraform init’ command to create the state file that will keep track of the infrastructure
+Terraform will run all Terraform files within the project folder. Make sure to navigate to the project folder in which Terraform is in. Then run the **‘Terraform init’** command to create the state file that will keep track of the infrastructure
 
-Next, run the ‘Terraform plan’ command to see the cloud resources that will be spun-up
+Next, run the **‘Terraform plan’** command to see the cloud resources that will be spun-up
 
   
 
-Finally, run the ‘Terraform apply’ command to create the cloud resources. Navigate to AWS console to find details about how to SSH into the machine.
+Finally, run the **‘Terraform apply’** command to create the cloud resources. Navigate to AWS console to find details about how to SSH into the machine.
 
 # Bare-metal Based Cyber Range
 
