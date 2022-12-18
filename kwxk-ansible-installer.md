@@ -13,7 +13,7 @@ This script installs ansible, checks the version of ansible, installs the latest
 
 1.  Download the script by running the following command:
 ```bash
-curl https://raw.githubusercontent.com/ansible-install-script/main/kwxk-ansible-installer.sh -o kwxk-ansible-installer.sh
+curl https://raw.githubusercontent.com/kwxk/Rutgers_Cyber_Range/master/kwxk-ansible-installer.sh -o kwxk-ansible-installer.sh
 ```
 2.  Make the script executable by running the following command:
 ```bash 
