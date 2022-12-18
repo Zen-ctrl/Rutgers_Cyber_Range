@@ -1,7 +1,9 @@
 # Rutgers ITI InfoSec | Scarlet Castle Cyber-Range
 ### Cloud and Baremetal
 ---
-
+# User the KWXK Ansible Installer Shell Script on your machine first.
+https://github.com/kwxk/Rutgers_Cyber_Range/blob/main/kwxk-ansible-installer.md 
+---
 
 # AWS Cloud Based Cyber Range
 
