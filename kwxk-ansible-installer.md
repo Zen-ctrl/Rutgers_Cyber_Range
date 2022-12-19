@@ -15,6 +15,10 @@ This script installs ansible, checks the version of ansible, installs the latest
 ```bash
 curl https://raw.githubusercontent.com/kwxk/Rutgers_Cyber_Range/master/kwxk-ansible-installer.sh -o kwxk-ansible-installer.sh
 ```
+
+```bash
+wget https://raw.githubusercontent.com/kwxk/Rutgers_Cyber_Range/master/kwxk-ansible-installer.sh -o kwxk-ansible-installer.sh
+```
 2.  Make the script executable by running the following command:
 ```bash 
 chmod +x kwxk-ansible-installer.sh
