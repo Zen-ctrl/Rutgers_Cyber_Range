@@ -1,0 +1,97 @@
+---
+- hosts: localhost
+  connection: local
+  become: true
+  # remote_user: ansible
+  # become: yes
+  # become_method: sudo
+  # gather_facts: no
+  # connection: ssh
+  tasks:
+   - name: Add group "admin_group" to remote server
+     group:
+       name: admin_group
+       gid: 2010
+       state: present
+
+   - name: Add group "group3" to remote server
+     group:
+       name: group3
+       gid: 2011
+       state: present
+
+   - name: Add group "group2" to remote server
+     group:
+       name: group2
+       gid: 2012
+       state: present 
+
+   - name: Add user "sysadmin" to remote server
+     user:
+       name: sysadmin
+       comment: "Privileged User"
+       uid: 2001
+       group: admin_group
+       groups: group3,group2
+       append: yes
+       shell: /bin/bash
+       generate_ssh_key: yes
+       ssh_key_bits: 2048
+       ssh_key_file: .ssh/id_rsa
+
+   - name: Add user "Bobin" to remote server
+     user:
+       name: bobin
+       comment: "Accountant UnPrivileged User"
+       uid: 2002
+       group: group3
+       shell: /bin/bash
+       generate_ssh_key: yes
+       ssh_key_bits: 2048
+       ssh_key_file: .ssh/id_rsa
+
+   - name: Add user "user1" to remote server
+     user:
+       name: user1
+       comment: "Content creator UnPrivileged User"
+       uid: 2003
+       group: group3
+       shell: /bin/bash
+       generate_ssh_key: yes
+       ssh_key_bits: 2048
+       ssh_key_file: .ssh/id_rsa
+
+   - name: Add user "TESTED" to remote server
+     user:
+       name: TESTED
+       comment: "Unix Admin Privileged User"
+       uid: 2004
+       group: admin_group
+       groups: group3,group2
+       append: yes
+       shell: /bin/sh
+       generate_ssh_key: yes
+       ssh_key_bits: 2048
+       ssh_key_file: .ssh/id_rsa
+
+   - name: Add user "Guest001" to remote server
+     user:
+       name: guest001
+       comment: "Temp account"
+       uid: 2005
+       group: group2
+       shell: /bin/bash
+       createhome: no
+       password: ''
+       expires: 1525198731
+
+   - name: Force user "Guest001" to change the password
+     command: 
+         chage -d 0 guest001
+
+   - name: Remove user "TESTED" from remote server
+     user:
+       name: TESTED
+       state: absent
+       remove: yes
+
