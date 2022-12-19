@@ -5,7 +5,7 @@
 https://github.com/kwxk/Rutgers_Cyber_Range/blob/main/kwxk-ansible-installer.md 
 ---
 
-### [kwk-ansible-installer.sh](https://github.com/kwxk/Rutgers_Cyber_Range/blob/main/kwxk-ansible-installer.sh)
+### [kwk-ansible-installer.sh](https://github.com/kwxk/Rutgers_Cyber_Range/blob/main/Bare%20Metal%20Setup%20-%20Rutgers%20Cyber%20Range/kwxk-ansible-installer.sh)
 
 
 
