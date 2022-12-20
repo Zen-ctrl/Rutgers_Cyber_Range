@@ -2,10 +2,9 @@
 ### Cloud and Baremetal
 ---
 # Use the KWXK Ansible Installer Shell Script on your machine first.
-[How to Run the Installer](https://github.com/kwxk/Rutgers_Cyber_Range/blob/main/Bare%20Metal%20Setup%20-%20Rutgers%20Cyber%20Range/running_ansible.md)
+[Pick the your OS: MacOs/Windows/Linux](https://github.com/kwxk/Rutgers_Cyber_Range/tree/main/Bare%20Metal%20Setup%20-%20Rutgers%20Cyber%20Range/baremetal%20setup%20installer)
 ---
 
-### [kwk-ansible-installer.sh](https://github.com/kwxk/Rutgers_Cyber_Range/blob/main/Bare%20Metal%20Setup%20-%20Rutgers%20Cyber%20Range/kwxk-ansible-installer.sh)
 
 
 
