@@ -1,0 +1,113 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+    - name: Create users from text file
+      user:
+        name: "{{ item }}"
+        password: "{{ 'temporary' | password_hash('sha512') }}"
+        update_password: always
+      loop: "{{ lookup('file', 'users.txt') }}"
+  - name: install apache
+    yum:
+      name: httpd
+      state: present
+  - name: start apache
+    service:
+      name: httpd
+      state: started
+  - name: enable apache
+    service:
+      name: httpd
+      enabled: true
+  - name: install apache
+    yum:
+      name: httpd
+      state: present
+  - name: start apache
+    service:
+      name: httpd
+      state: started
+  - name: enable apache
+    service:
+      name: httpd
+      enabled: true
+  - name: Create flag captured text file
+    file:
+      path: /var/www/html/flag.txt
+      mode: 0700
+      owner: root
+      group: root
+      content: "Flag captured"
+
+  - name: Download kernel headers (1)
+    get_url:
+      url: https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.8/linux-headers-4.8.0-040800_4.8.0-040800.201610022031_all.deb
+      dest: /tmp/linux-headers-4.8.0-040800_4.8.0-040800.201610022031_all.deb
+
+  - name: Install kernel headers (1)
+    yum:
+      name: /tmp/linux-headers-4.8.0-040800_4.8.0-040800.201610022031_all.deb
+      state: present
+
+  - name: Download kernel headers (2)
+    get_url:
+      url: https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.8/linux-headers-4.8.0-040800-cloud_4.8.0-040800.201610022031_amd64.deb
+      dest: /tmp/linux-headers-4.8.0-040800-cloud_4.8.0-040800.201610022031_amd64.deb
+
+  - name: Install kernel headers (2)
+    yum:
+      name: /tmp/linux-headers-4.8.0-040800-cloud_4.8.0-040800.201610022031_amd64.deb
+      state: present
+
+  - name: Download kernel headers (3)
+    get_url:
+      url: https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.8/linux-headers-4.8.0-040800-generic_4.8.0-040800.201610022031_amd64.deb
+      dest: /tmp/linux-headers-4.8.0-040800-generic_4.8.0-040800.201610022031_amd64.deb
+
+  - name: Install kernel headers (3)
+    yum:
+      name: /tmp/linux-headers-4.8.0-040800-generic_4.8.0-040800.201610022031_amd64.deb
+      state: present
+
+    - name: Download kernel headers (4)
+      get_url:
+        url: https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.8/linux-headers-4.8.0-040800-lowlatency_4.8.0-040800.201610022031_amd64.deb
+        dest: /tmp/linux-headers-4.8.0-040800-lowlatency_4.8.0-040800.201610022031_amd64.deb
+
+    - name: Install kernel headers (4)
+      yum:
+        name: /tmp/linux-headers-4.8.0-040800-lowlatency_4.8.0-040800.201610022031_amd64.deb
+        state: present
+
+    - name: Download kernel image (5)
+      get_url:
+        url: https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.8/linux-image-4.8.0-040800-cloud_4.8.0-040800.201610022031_amd64.deb
+        dest: /tmp/linux-image-4.8.0-040800-cloud_4.8.0-040800.201610022031_amd64.deb
+
+    - name: Install kernel image (5)
+      yum:
+        name: /tmp/linux-image-4.8.0-040800-cloud_4.8.0-040800.201610022031_amd64.deb
+        state: present
+
+    - name: Download kernel image (6)
+      get_url:
+        url: https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.8/linux-image-4.8.0-040800-generic_4.8.0-040800.201610022031_amd64.deb
+        dest: /tmp/linux-image-4.8.0-040800-generic_4.8.0-040800.201610022031_amd64.deb
+
+    - name: Install kernel image (6)
+      yum:
+        name: /tmp/linux-image-4.8.0-040800-generic_4.8.0-040800.201610022031_amd64.deb
+        state: present
+
+    - name: Download kernel image (7)
+      get_url:
+        url: https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.8/linux-image-4.8.0-040800-lowlatency_4.8.0-040800.201610022031_amd64.deb
+        dest: /tmp/linux-image-4.8.0-040800-lowlatency_4.8.0-040800.201610022031_amd64.deb
+
+    - name: Install kernel image (7)
+      yum:
+        name: /tmp/linux-image-4.8.0-040800-lowlatency_4.8.0-040800.201610022031_amd64.deb
+        state: present
+      - name: Reboot system to apply new kernel
+        shell: reboot
