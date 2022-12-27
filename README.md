@@ -165,9 +165,11 @@ Note: The `ansible-playbook` command will execute the playbook on the hosts spec
 If you want to target the a remote machine, in the ```main.yml``` file, remove the comments from the **```vars_files```** and **```vars:```** block so that ansible can target the remote machines listed in your ```inventory.txt``` file.
 
 
-### AFTER THE PLAYBOOK HAS RUN...
+## AFTER THE PLAYBOOK HAS RUN...
 
-Run the kernel_change_4.8.sh file to change the kernel to the vulnerable kernel release...
+## Run the kernel down grade shell script when finished with the playbook
+#### [kernel_change_4.8.sh](https://github.com/kwxk/Rutgers_Cyber_Range/blob/main/Bare%20Metal%20Setup%20-%20Rutgers%20Cyber%20Range/kernel_change_4.8.sh)
+
 
 ```
 tar xvf linux-4.8
@@ -262,5 +264,5 @@ Here is a high-level overview of the steps that you can follow to exploit the "D
 3.  If the machine is vulnerable, use exploit tools or personal scripting capabilities. Exploit tool example: [https://dirtycow.ninja/](https://dirtycow.ninja/)
  
 
-Run the kernel down grade shell script when finished with the playbook
+## Remember, Run the kernel down grade shell script when finished with the playbook
 #### [kernel_change_4.8.sh](https://github.com/kwxk/Rutgers_Cyber_Range/blob/main/Bare%20Metal%20Setup%20-%20Rutgers%20Cyber%20Range/kernel_change_4.8.sh)
