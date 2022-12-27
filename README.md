@@ -263,4 +263,4 @@ Here is a high-level overview of the steps that you can follow to exploit the "D
  
 
 Run the kernel down grade shell script when finished with the playbook
-Follow[]
+#### [kernel_change_4.8.sh](https://github.com/kwxk/Rutgers_Cyber_Range/blob/main/Bare%20Metal%20Setup%20-%20Rutgers%20Cyber%20Range/kernel_change_4.8.sh)
