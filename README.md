@@ -3,7 +3,7 @@
 ### Cloud Instances and Baremetal
 ---
 # Use the KWXK Ansible Installer Shell Script on your machine first.
-[Pick the your OS: MacOs/Windows/Linux](https://github.com/kwxk/Rutgers_Cyber_Range/tree/main/Bare%20Metal%20Setup%20-%20Rutgers%20Cyber%20Range/baremetal%20setup%20installer)
+[Linux](https://github.com/kwxk/Rutgers_Cyber_Range/tree/main/Bare%20Metal%20Setup%20-%20Rutgers%20Cyber%20Range/baremetal%20setup%20installer)
 ---
 
 # AWS Cloud Based Cyber Range
