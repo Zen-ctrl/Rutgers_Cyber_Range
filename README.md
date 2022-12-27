@@ -189,60 +189,40 @@ To introduce the ***"Dirty COW"*** vulnerability to a machine, you would need to
 
 **Playbook Example:**
 
-    tasks:
-    - name:  Install  vulnerable  kernel
-      package:
-       name:  linux-image-4.8.0-58-generic
-       state:  latest
-       
+```
+  - name: Download kernel source code
+    command:  wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.8.tar.xz
+    when: file_stat.stat.exists == False
+    become: true
+```
+
 This task will use the package module to install the linux-image-4.8.0-58-generic package, which is a version of the Linux kernel that is affected by the ***"Dirty COW"*** vulnerability.
 
   
 
 ## USER Generator
 
-Creating 30 users from a text file in your ansible playbook we will use the module **`with_items`** loop.
+Creating  users from a text file in your ansible playbook we  use the module **`loop`**.
 
- -  First, create a text file called users.txt that contains the list of users you want to create. Each user should be on a separate line.
-
- -  In your playbook, you can add the following task to create the users:
 ```
- tasks:
-  - name: Create users from text file
-    user:
-      name: "{{ item }}"
-      password: "{{ 'temporary' | password_hash('sha512') }}"
-      update_password: always
-    with_items: "{{ lookup('file', 'users.txt') }}"
+  - name: Create users
+    user: name="{{item}}" shell=/bin/bash home="/srv/{{item}}" groups=usersgroup generate_ssh_key=yes ssh_key_bits=2048
+    loop:  "{{ lookup('file', 'users.txt', wantList=True) }}"
+  - name: Set password to users
+    shell: echo "{{item}}:root" | sudo chpasswd
+    no_log: True
+    loop:  "{{ lookup('file', 'users.txt', wantList=True) }}"
 ```
   
-  
-
-This task creates a user for each line in the users.txt file. It uses the user module.
-
-  
-
 ### User.txt:
 
 ```
-User1
-
-User2
-
-User3
-
-User4
-
-User5
-
-......
-
-User30
+['user0','user1', 'user3']
 
 ```
 The password parameter creates a temporary password that will be hashed using the sha512 algorithm. The update_password parameter tells ansible to update the password whenever the task is run.
 
-The **`with_items`** loop iterates over the list of users in the users.txt file, creating a user for each one.
+The **`loop`** module  iterates over the list of users in the users.txt file, creating a user for each one.
 
   
 
@@ -267,7 +247,7 @@ The task uses the apt module to install the apache2 package, which provides the 
 
 ## Capture The Flag
 
-There is a flag.txt file that is placed in the /var/www/html folder. You need to find a way to use the ‘Dirty COW’ exploit to gain access to this file and expose its content. This is an exercise that should be performed from a user on the server that is not root or does not have root privileges.
+There is a **```restricted.txt```** file that is placed in the /var/www/html folder. You need to find a way to use the **‘Dirty COW’** exploit to gain access to this file and expose its content. This is an exercise that should be performed from a user on the server that is not root or does not have root privileges.
 
 ### How to Exploit “DIRTY COW”
 
@@ -279,6 +259,8 @@ Here is a high-level overview of the steps that you can follow to exploit the "D
     
 2.  Check if the machine is vulnerable to the ***"Dirty COW"*** vulnerability: [https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5195](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5195)
     
-3.  If the machine is vulnerable,use exploit tools or personal scripting capabilities. Exploit tool example: [https://dirtycow.ninja/](https://dirtycow.ninja/)
+3.  If the machine is vulnerable, use exploit tools or personal scripting capabilities. Exploit tool example: [https://dirtycow.ninja/](https://dirtycow.ninja/)
+ 
 
-
+Run the kernel down grade shell script when finished with the playbook
+Follow[]
