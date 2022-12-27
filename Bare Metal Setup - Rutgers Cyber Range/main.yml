@@ -1,0 +1,66 @@
+---
+- hosts: localhost
+  become: yes
+  remote_user: root1
+  become_user: root
+#  vars_files:
+#    - vars.yml
+#  vars:
+#    ansible_ssh_private_key_file: "{{key}}"
+  tasks:
+
+  - name: Install dependencies
+    yum:
+      name:
+        - wget
+        - make
+        - gcc
+        - kernel-headers
+        - kernel-devel
+        - libtermcap-devel
+      state: present
+  - name: create group
+    group:
+      name: usersgroup
+      state: present
+  - name: Install Apache web server
+    yum:
+      name: apache2
+      state: present
+  - name: Start Apache service
+    service:
+      name: apache2
+      state: started
+  - name: Enable Apache service to start on boot
+    systemd:
+      name: apache2
+      state: enabled     
+  - name: Create users
+    user: name="{{item}}" shell=/bin/bash home="/srv/{{item}}" groups=usersgroup generate_ssh_key=yes ssh_key_bits=2048
+    loop:  "{{ lookup('file', 'users.txt', wantList=True) }}"
+  - name: Set password to users
+    shell: echo "{{item}}:root" | sudo chpasswd
+    no_log: True
+    loop:  "{{ lookup('file', 'users.txt', wantList=True) }}"
+  - name: Check if file exists
+    stat:
+      path: linux-4.8.tar.xz
+    register: file_stat
+
+  - name: Download kernel source code
+    command:  wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.8.tar.xz
+    when: file_stat.stat.exists == False
+    become: true
+
+  - name: Create restricted file
+    lineinfile:
+      path: /var/www/restricted.txt
+      line: "flag captured"
+      create: true
+
+  - name: Set ownership and permissions of restricted file
+    file:
+      path: /var/www/restricted.txt
+      owner: root
+      group: root
+      mode: 0640
