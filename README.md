@@ -6,23 +6,6 @@
 [Pick the your OS: MacOs/Windows/Linux](https://github.com/kwxk/Rutgers_Cyber_Range/tree/main/Bare%20Metal%20Setup%20-%20Rutgers%20Cyber%20Range/baremetal%20setup%20installer)
 ---
 
-
-
-
-##### This script is a shell script that installs Ansible and Python on a user-specified operating system. The script begins by presenting the user with a list of options for the operating system: macOS, Linux, or Windows. The user is prompted to enter their choice, which is then stored in the `choice` variable.
-
-The script uses an `if` statement to check the value of `choice` and determine which operating system was selected. If the value of `choice` is either "1" or "macOS", the script installs Ansible and Python on a macOS system using the `brew` package manager. The script first checks if `brew` is already installed by using the `command` command and the `-v` option to check if the `brew` command is available. If `brew` is not installed, the script installs it using the `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"` command.
-
-The script then checks if Ansible is already installed, and installs it using the `brew install ansible` command if it is not. The script also prints the version of Ansible using the `ansible --version` command. Finally, the script checks if Python is already installed, and installs it using the `brew install python` command if it is not. The script also prints the version of Python using the `python -V` command.
-
-If the value of `choice` is either "2" or "Linux", the script installs Ansible and Python on a Linux system using the `apt-get` package manager. The script first checks if Ansible is already installed, and installs it using the `apt-get` commands if it is not. The script also prints the version of Ansible using the `ansible --version` command. The script then installs Python 3 using the `apt-get install python3` command and prints the version of Python using the `python3 -V` command.
-
-If the value of `choice` is either "3" or "Windows", the script installs Ansible and Python on a Windows system using the `choco` package manager. The script first checks if `choco` is already installed, and installs it using the `Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))` command if it is not. The script then checks if ansible is already installed, and installs it using the `choco install ansible` command if it is not. The script also prints the version of ansible using the `ansible --version` command. Finally, the script checks if Python is already installed, and installs it using the `choco install python` command if it is not. The script also prints the version of Python using the `python -V` command.
-
-If the value of `choice` does not match any of the conditions, the script prints an error message saying "Invalid choice. Please enter a valid number (1, 2, or 3)."
-
-
----
 # AWS Cloud Based Cyber Range
 
 ## AWS CLI
