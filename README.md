@@ -1,5 +1,6 @@
+
 # Rutgers ITI InfoSec | Scarlet Castle Cyber-Range
-### Cloud and Baremetal
+### Cloud Instances and Baremetal
 ---
 # Use the KWXK Ansible Installer Shell Script on your machine first.
 [Pick the your OS: MacOs/Windows/Linux](https://github.com/kwxk/Rutgers_Cyber_Range/tree/main/Bare%20Metal%20Setup%20-%20Rutgers%20Cyber%20Range/baremetal%20setup%20installer)
@@ -130,28 +131,72 @@ Finally, run the **‘Terraform apply’** command to create the cloud resources
 
 Ansible is an automation tool that enables the execution of tasks on multiple systems simultaneously. It allows users to define instructions in the form of playbooks, which can be executed on targeted systems to automate processes and reduce the workload. Ansible is a useful tool for streamlining the configuration and management of large numbers of systems, providing an efficient means of automating repetitive tasks and reducing the potential for human error.
 
-  
+### main.yml
+This Ansible playbook does the following:
+
+1.  It targets the localhost with the `hosts` parameter and specifies that it will use the `root1` user to connect and run the tasks as the `root` user using the `remote_user` and `become_user` parameters, respectively.
+    
+2.  It installs several dependencies using the `yum` module. The dependencies that will be installed are `wget`, `make`, `gcc`, `kernel-headers`, `kernel-devel`, and `libtermcap-devel`.
+    
+3.  It creates a group called `usersgroup` using the `group` module.
+    
+4.  It installs the Apache web server using the `yum` module.
+    
+5.  It starts the Apache service using the `service` module.
+    
+6.  It enables the Apache service to start on boot using the `systemd` module.
+    
+7.  It creates multiple users using the `user` module. The names of the users are specified in the `users.txt` file and are looped through using the `loop` parameter. The `home` directory for each user is set to `/srv/{{item}}` and the users are added to the `usersgroup` group. The `generate_ssh_key` and `ssh_key_bits` parameters are used to generate an SSH key for each user with 2048 bits.
+    
+8.  It sets the password for each user to `root` using the `shell` module and the `chpasswd` command. The `no_log` parameter is used to prevent the password from being logged in the playbook output.
+    
+9.  It checks if the file `linux-4.8.tar.xz` exists using the `stat` module and registers the result in the `file_stat` variable.
+    
+10.  If the file does not exist, it downloads the kernel source code using the `command` module and the `wget` command. The `become` parameter is used to run the command as the `root` user.
+    
+11.  It creates a file called `restricted.txt` using the `lineinfile` module and adds the line "flag captured" to it.
+    
+12.  It sets the ownership and permissions of the `restricted.txt` file using the `file` module. The ownership is set to `root` and the group is set to `root`, and the permissions are set to `0640`.  
+
+
 
 ## Set Up Details
+To run this playbook, you will need to follow these steps:
 
-To install Ansible on a Windows machine, you will need to install the Windows Subsystem for Linux (WSL) and then use the package manager for your preferred Linux distribution to install ansible.
-
-Here are the steps to do this:
-
-1.  Enable the Windows Subsystem for Linux (WSL) feature by following these instructions: [https://docs.microsoft.com/en-us/windows/wsl/install-win10](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+1.  Make sure that you have Ansible installed on your machine. You can install it using the following command:
+	 ```pip install ansible```
+2.  Make sure that the inventory file (`inventory.txt`) and the playbook file (`main.yml`) are in the same directory.
     
-2.  Once the WSL feature is enabled, install a Linux distribution from the Microsoft Store.
+3.  (Optional) If you are using the `vars_files` parameter to specify a variable file (`vars.yml`) in the playbook, make sure that the variable file is in the same directory as the playbook.
     
-3.  Open the Linux terminal and update the package manager's package index:
-**`sudo apt-get  update`**
+4.  Open a terminal window and navigate to the directory where the playbook and inventory file are located.
+    
+5.  Run the following command to execute the playbook:
+```ansible-playbook -i inventory.txt main.yml```
 
-5.  Install ansible using the package manager:
-**`sudo apt-get install ansible`**
+6.  (Optional) If you are using the **`vars_files`** parameter in the playbook, you can specify the variables file using the `--extra-vars` flag as follows:
+```ansible-playbook -i inventory.txt main.yml --extra-vars "@vars.yml" ```
 
-6.  Verify the installation by running the following command:
-	**`ansible --version`**
+Note: The `ansible-playbook` command will execute the playbook on the hosts specified in the inventory file. In this case, the playbook is targeting the `localhost`, so it will execute on the machine where the playbook is being run.
+
+If you want to target the a remote machine, in the ```main.yml``` file, remove the comments from the **```vars_files```** and **```vars:```** block so that ansible can target the remote machines listed in your ```inventory.txt``` file.
+
+
+### AFTER THE PLAYBOOK HAS RUN...
+
+Run the kernel_change_4.8.sh file to change the kernel to the vulnerable kernel release...
+
+```
+tar xvf linux-4.8
+cd linux-4.8
+# input the prompted 
+sudo make oldconfig
+sudo make install
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+sudo reboot
+```
  
-Run the Ansible Playbook. Be sure to move the users.txt to the necessary file path on your machine. Update this path within the Ansible playbook.
+---
 
 ## “Dirty COW” / “DIRTY PIPE” CVE
 
