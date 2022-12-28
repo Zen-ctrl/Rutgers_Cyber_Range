@@ -110,6 +110,10 @@ Finally, run the **‘Terraform apply’** command to create the cloud resources
 
 # Bare-metal Based Cyber Range
 
+#### The the cyber range is designed forRed Hat-based Linux distributions such as CentOS and Fedora. These distributions use the yum package manager to install and manage software packages.
+
+If you are using a different type of Linux distribution, the package manager and repository structure may be different, so you may need to modify the scripts accordingly.
+
 ## Ansible
 
 Ansible is an automation tool that enables the execution of tasks on multiple systems simultaneously. It allows users to define instructions in the form of playbooks, which can be executed on targeted systems to automate processes and reduce the workload. Ansible is a useful tool for streamlining the configuration and management of large numbers of systems, providing an efficient means of automating repetitive tasks and reducing the potential for human error.
