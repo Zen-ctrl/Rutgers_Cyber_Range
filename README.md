@@ -139,7 +139,7 @@ To run this playbook, you will need to follow these steps:
 
 1.  Make sure that you have Ansible installed on your machine. You can install it using the following command:
 	 ```pip install ansible```
-	 [or just run this](https://github.com/kwxk/Rutgers_Cyber_Range/blob/main/Bare%20Metal%20Setup%20-%20Rutgers%20Cyber%20Range/baremetal%20setup%20installer/linux-installer.sh)
+[or just run this](https://github.com/kwxk/Rutgers_Cyber_Range/blob/main/Bare%20Metal%20Setup%20-%20Rutgers%20Cyber%20Range/baremetal%20setup%20installer/linux-installer.sh)
 2.  Make sure that the inventory file (`inventory.txt`) and the playbook file (`main.yml`) are in the same directory.
     
 3.  (Optional) If you are using the `vars_files` parameter to specify a variable file (`vars.yml`) in the playbook, make sure that the variable file is in the same directory as the playbook.
@@ -240,12 +240,7 @@ tasks:
       name: httpd
       enabled: true
 ```
-The task uses the apt module to install the apache2 package, which provides the Apache web server.
 
-2.  The template module is used to configure the web server.
-    
-3.  Restart Apache such that updates are applied.
-    
 
 ## Capture The Flag
 
