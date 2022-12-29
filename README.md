@@ -239,10 +239,18 @@ The **`loop`** module  iterates over the list of users in the users.txt file, cr
 
 ```
 tasks:
-- name:  Install web server  software
-  apt:
-   name:  apache2
-   state:  present
+  - name: install apache
+    yum:
+      name: httpd
+      state: present
+  - name: start apache
+    service:
+      name: httpd
+      state: started
+  - name: enable apache
+    service:
+      name: httpd
+      enabled: true
 ```
 The task uses the apt module to install the apache2 package, which provides the Apache web server.
 
