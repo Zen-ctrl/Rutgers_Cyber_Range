@@ -60,17 +60,6 @@ To download the AWS CLI on a Windows machine, follow these steps:
 
 Note: If you need to specify a different profile or credentials file, you can use the --profile option when running the aws configure command or when using the AWS CLI. For example: aws configure --profile my_profile.
 
-### MAC OS
-
-To install the AWS CLI on a Mac, follow these steps:
-
-1.  Download the AWS CLI package by running this command in the terminal: curl "[https://awscli.amazonaws.com/AWSCLIV2.pkg](https://awscli.amazonaws.com/AWSCLIV2.pkg)” -o "AWSCLIV2.pkg"
-
-2.  Install the package by running this command: sudo installer -pkg AWSCLIV2.pkg -target /
-
-3.  Verify the installation by checking the version number: aws --version
-
-If you had previously installed the AWS CLI using the pip package manager, you may need to uninstall it first. To do this, run the following command: pip uninstall awscli
 
 ### LINUX
 
@@ -119,31 +108,29 @@ If you are using a different type of Linux distribution, the package manager and
 Ansible is an automation tool that enables the execution of tasks on multiple systems simultaneously. It allows users to define instructions in the form of playbooks, which can be executed on targeted systems to automate processes and reduce the workload. Ansible is a useful tool for streamlining the configuration and management of large numbers of systems, providing an efficient means of automating repetitive tasks and reducing the potential for human error.
 
 ### main.yml
-This Ansible playbook does the following:
+Here is a breakdown of the tasks:
 
-1.  It targets the localhost with the `hosts` parameter and specifies that it will use the `root1` user to connect and run the tasks as the `root` user using the `remote_user` and `become_user` parameters, respectively.
+1.  Install dependencies: This task installs several packages (wget, make, gcc, kernel-headers, kernel-devel, and libtermcap-devel) using the `yum` module.
     
-2.  It installs several dependencies using the `yum` module. The dependencies that will be installed are `wget`, `make`, `gcc`, `kernel-headers`, `kernel-devel`, and `libtermcap-devel`.
+2.  Create group: This task creates a group called "usersgroup" using the `group` module.
     
-3.  It creates a group called `usersgroup` using the `group` module.
+3.  Install Apache: This task installs the Apache web server package using the `yum` module.
     
-4.  It installs the Apache web server using the `yum` module.
+4.  Start Apache: This task starts the Apache web server using the `service` module.
     
-5.  It starts the Apache service using the `service` module.
+5.  Enable Apache: This task enables the Apache web server to start automatically on system boot using the `service` module.
     
-6.  It enables the Apache service to start on boot using the `systemd` module.
+6.  Create users: This task creates a list of users specified in the file "users.txt" using the `user` module. It sets the shell to /bin/bash and the home directory to /srv/{{item}}, where {{item}} is the username. It also generates an SSH key for each user and adds them to the "usersgroup" group.
     
-7.  It creates multiple users using the `user` module. The names of the users are specified in the `users.txt` file and are looped through using the `loop` parameter. The `home` directory for each user is set to `/srv/{{item}}` and the users are added to the `usersgroup` group. The `generate_ssh_key` and `ssh_key_bits` parameters are used to generate an SSH key for each user with 2048 bits.
+7.  Set password to users: This task sets the password for the users in the list to "root" using the `shell` module and the `chpasswd` command. The `no_log` option is used to prevent the password from being logged in the playbook output.
     
-8.  It sets the password for each user to `root` using the `shell` module and the `chpasswd` command. The `no_log` parameter is used to prevent the password from being logged in the playbook output.
+8.  Check if file exists: This task checks if the file "linux-4.8.tar.xz" exists using the `stat` module. The result is stored in the `file_stat` variable.
     
-9.  It checks if the file `linux-4.8.tar.xz` exists using the `stat` module and registers the result in the `file_stat` variable.
+9.  Download kernel source code: This task downloads the kernel source code from the specified URL using the `command` module and the `wget` command. The `when` clause specifies that this task should only run if the file does not exist (as determined by the previous task).
     
-10.  If the file does not exist, it downloads the kernel source code using the `command` module and the `wget` command. The `become` parameter is used to run the command as the `root` user.
+10.  Create restricted file: This task creates a file called "restricted.txt" using the `lineinfile` module and adds a single line of text to it.
     
-11.  It creates a file called `restricted.txt` using the `lineinfile` module and adds the line "flag captured" to it.
-    
-12.  It sets the ownership and permissions of the `restricted.txt` file using the `file` module. The ownership is set to `root` and the group is set to `root`, and the permissions are set to `0640`.  
+11.  Set ownership and permissions of restricted file: This task sets the ownership and permissions of the "restricted.txt" file using the `file` module. It sets the owner to "root" and the group to "root", and sets the file permissions to 0640 (read and write for owner, read-only for group and others).
 
 
 
@@ -152,6 +139,7 @@ To run this playbook, you will need to follow these steps:
 
 1.  Make sure that you have Ansible installed on your machine. You can install it using the following command:
 	 ```pip install ansible```
+	 [or just run this](https://github.com/kwxk/Rutgers_Cyber_Range/blob/main/Bare%20Metal%20Setup%20-%20Rutgers%20Cyber%20Range/baremetal%20setup%20installer/linux-installer.sh)
 2.  Make sure that the inventory file (`inventory.txt`) and the playbook file (`main.yml`) are in the same directory.
     
 3.  (Optional) If you are using the `vars_files` parameter to specify a variable file (`vars.yml`) in the playbook, make sure that the variable file is in the same directory as the playbook.
