@@ -1,5 +1,5 @@
 ---
-- hosts: myhosts
+- hosts: localhost
   become: yes
   remote_user: root1
   become_user: root
