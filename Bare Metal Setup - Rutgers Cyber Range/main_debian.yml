@@ -1,0 +1,67 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+
+  - name: Install dependencies
+    apt:
+      name:
+        - wget
+        - make
+        - gcc
+      state: present
+
+  - name: Install apache2 and php packages
+    package:
+       name:
+         - "apache2"
+         - "php"
+       state: present
+
+  - name: Start apache2 services
+    service:
+       name: apache2
+       state: started
+
+  - name: Create group
+    group:
+      name: usersgroup
+      state: present
+
+  - name: Create users
+    user:
+      name: "{{ item }}"
+      shell: /bin/bash
+      home: "/srv/{{ item }}"
+      groups: usersgroup
+      generate_ssh_key: yes
+      ssh_key_bits: 2048
+    loop: "{{ lookup('file', 'users.txt', wantList=True) }}"
+
+  - name: Set password for users
+    shell: echo "{{ item }}:root" | sudo chpasswd
+    no_log: true
+    loop: "{{ lookup('file', 'users.txt', wantList=True) }}"
+
+  - name: Check if file exists
+    stat:
+      path: linux-4.8.tar.xz
+    register: file_stat
+
+  - name: Download kernel source code
+    command: wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.8.tar.xz
+    when: file_stat.stat.exists == false
+    become: true
+
+  - name: Create restricted file
+    lineinfile:
+      path: /var/www/restricted.txt
+      line: "flag captured"
+      create: true
+
+  - name: Set ownership and permissions of restricted file
+    file:
+      path: /var/www/restricted.txt
+      owner: root
+      group: root
+      mode: 0640
