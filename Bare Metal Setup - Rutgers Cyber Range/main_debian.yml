@@ -1,67 +1,81 @@
 ---
-- hosts: localhost
+- name: Rutgers Cyber Range Setup
+  hosts: localhost
   become: true
+
   tasks:
+    - name: Update APT cache
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600
 
-  - name: Install dependencies
-    apt:
-      name:
-        - wget
-        - make
-        - gcc
-      state: present
+    - name: Install dependencies
+      ansible.builtin.apt:
+        name:
+          - wget
+          - make
+          - gcc
+        state: present
 
-  - name: Install apache2 and php packages
-    package:
-       name:
-         - "apache2"
-         - "php"
-       state: present
+    - name: "Install apache2 and PHP packages"
+      package:
+        name:
+          - "apache2"
+          - "php"
+        state: present
 
-  - name: Start apache2 services
-    service:
-       name: apache2
-       state: started
+    - name: "Open port 80 for apache2"
+      ansible.builtin.iptables:
+        chain: INPUT
+        ctstate: NEW
+        protocol: tcp
+        destination_port: 80
+        jump: ACCEPT
+      become: true
 
-  - name: Create group
-    group:
-      name: usersgroup
-      state: present
+    - name: "Open port 443 for https traffic"
+      ansible.builtin.iptables:
+        chain: INPUT
+        ctstate: NEW
+        protocol: tcp
+        destination_port: 443
+        jump: ACCEPT
+      become: true
 
-  - name: Create users
-    user:
-      name: "{{ item }}"
-      shell: /bin/bash
-      home: "/srv/{{ item }}"
-      groups: usersgroup
-      generate_ssh_key: yes
-      ssh_key_bits: 2048
-    loop: "{{ lookup('file', 'users.txt', wantList=True) }}"
+    - name: "Start apache2 services"
+      service:
+        name: apache2
+        state: started
 
-  - name: Set password for users
-    shell: echo "{{ item }}:root" | sudo chpasswd
-    no_log: true
-    loop: "{{ lookup('file', 'users.txt', wantList=True) }}"
+    - name: Create group
+      group:
+        name: usersgroup
+        state: present
 
-  - name: Check if file exists
-    stat:
-      path: linux-4.8.tar.xz
-    register: file_stat
+    - name: Create users
+      user:
+        name: "{{ item }}"
+        shell: /bin/bash
+        home: "/srv/{{ item }}"
+        groups: usersgroup
+        generate_ssh_key: yes
+        ssh_key_bits: 2048
+      loop: "{{ lookup('file', 'users.txt', wantList=True) }}"
 
-  - name: Download kernel source code
-    command: wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.8.tar.xz
-    when: file_stat.stat.exists == false
-    become: true
+    - name: Set password to users
+      shell: echo "{{ item }}:root" | sudo chpasswd
+      no_log: True
+      loop: "{{ lookup('file', 'users.txt', wantList=True) }}"
 
-  - name: Create restricted file
-    lineinfile:
-      path: /var/www/restricted.txt
-      line: "flag captured"
-      create: true
+    - name: Create restricted file
+      lineinfile:
+        path: /var/www/restricted.txt
+        line: "flag captured"
+        create: true
 
-  - name: Set ownership and permissions of restricted file
-    file:
-      path: /var/www/restricted.txt
-      owner: root
-      group: root
-      mode: 0640
+    - name: Set ownership and permissions of restricted file
+      file:
+        path: /var/www/restricted.txt
+        owner: root
+        group: root
+        mode: 0640
