@@ -8,6 +8,8 @@ The Cyber Range has been updated to run on Ubuntu 20-4 with a manually installed
 To get started, install the ***.ova** file* and open it up in your Virtual Machine application of choice. I used VMware Workstation so see 'Step-1: Prepare Target System" directions for the setup on VMware Workstation. 
 
 The .OVA image of the cyber range has the exploit installed, however, it does not have Ansible installed nor does it have other users. 
+A link to the .OVA https://drive.google.com/drive/folders/1ANb-LaDyDZGe_ZivHizJ7Gqs2xRV9Dbk?usp=share_link
+
 
 **Once you're on the machine do the following:**
 
