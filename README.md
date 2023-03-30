@@ -81,6 +81,9 @@ PRETTY_NAME="Ubuntu 20.04.3 LTS"
 ## Step-3: Download and Compile CVE-2022-0847-DirtyPipe-Exploits Scanner:
 ⦁	After successfully install git, gcc now clone the exploits scanner from GitHub:
  git clone https://github.com/AlexisAhmed/CVE-2022-0847-DirtyPipe-Exploits.git
+ 
+ Use this command if you don't want to use git: wget https://github.com/AlexisAhmed/CVE-2022-0847-DirtyPipe-Exploits/archive/refs/heads/main.zip
+
 ⦁	Check is it download or not:
 ```
 ls -la
