@@ -77,7 +77,7 @@ ID_LIKE=debian
 PRETTY_NAME="Ubuntu 20.04.3 LTS"
 ```
 ⦁	You will need to have GCC and Git installed:
-```sudo apt-get install gcc git -y```
+```sudo apt install gcc git -y```
 ## Step-3: Download and Compile CVE-2022-0847-DirtyPipe-Exploits Scanner:
 ⦁	After successfully install git, gcc now clone the exploits scanner from GitHub:
  git clone https://github.com/AlexisAhmed/CVE-2022-0847-DirtyPipe-Exploits.git
