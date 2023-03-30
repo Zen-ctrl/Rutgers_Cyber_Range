@@ -14,10 +14,10 @@ A link to the .OVA https://drive.google.com/drive/folders/1ANb-LaDyDZGe_ZivHizJ7
 **Once you're on the machine do the following:**
 
 1. Install Ansible:
-```sudo apt-get install ansible```
+```sudo apt install ansible```
 
 2. Install unzip:
-```sudo apt-get install unzip```
+```sudo apt install unzip```
 
 3. Use wget to download this repo
 ```wget https://github.com/kwxk/Rutgers_Cyber_Range/archive/refs/heads/main.zip```
