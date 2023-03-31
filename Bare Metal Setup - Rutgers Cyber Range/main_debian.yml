@@ -17,7 +17,6 @@
       package:
         name:
           - "apache2"
-          - "php"
         state: present
 
     - name: "Open port 80 for apache2"
