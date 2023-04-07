@@ -46,18 +46,18 @@ https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/23/Workstat
 # CVE-2022-0847-DirtyPipe-Exploits Scan
 
 ## Step-1: Prepare Target System:
-⦁	Download “Exploit-Target-Ubuntu-20-4.ova”  
-⦁	Open VMware workstation and go to “File>Open”:  
+1	Download “Exploit-Target-Ubuntu-20-4.ova”  
+2	Open VMware workstation and go to “File>Open”:  
  
-⦁	Browse and select “Exploit-Target-Ubuntu-20-4.ova” file: 
+3	Browse and select “Exploit-Target-Ubuntu-20-4.ova” file: 
   
-⦁	Set a name for VM and select the location to store it and click on Import:
+4	Set a name for VM and select the location to store it and click on Import:
  
-⦁	Importing OVA:
+5	Importing OVA:
  
-⦁	Finally, the VM is ready to play and start it:
+6	Finally, the VM is ready to play and start it:
  
-⦁	Now login with User: exploit password: exploit
+7	Now login with User: exploit password: exploit
  
 ⦁	Now the system is ready:
  
