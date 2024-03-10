@@ -26,7 +26,7 @@ Once you're logged in to the Cyber Range machine, follow these steps:
 
 1.  Install Ansible: `sudo apt install ansible`
 2.  Install unzip: `sudo apt install unzip`
-3.  Download the repository using wget: `wget https://github.com/kwxk/Rutgers_Cyber_Range/archive/refs/heads/main.zip`
+3.  Download the repository using wget: `wget https://github.com/Zen-ctrl/Rutgers_Cyber_Range/archive/refs/heads/main.zip`
 4.  Check if the kwkx Rutgers_Cyber_Cyber_Range zip file is there: `ls`
 5.  Unzip the downloaded repository: `unzip main.zip`
 6.  List the files and change the directory to the directory of the cyber range files: `ls`
@@ -199,7 +199,7 @@ This Ansible playbook is designed to perform various tasks on a Red Hat-based sy
 
 ### Run the kernel downgrade shell script when finished with the playbook
 
-### $>>>> ./[kernel_change_4.8.sh](https://github.com/kwxk/Rutgers_Cyber_Range/blob/main/Bare%20Metal%20Setup%20-%20Rutgers%20Cyber%20Range/kernel_change_4.8.sh)
+### $>>>> ./[kernel_change_4.8.sh](https://github.com/Zen-ctrl/Rutgers_Cyber_Range/blob/main/Bare%20Metal%20Setup%20-%20Rutgers%20Cyber%20Range/kernel_change_4.8.sh)
 ```
 tar xvf linux-4.8
 
